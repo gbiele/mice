@@ -67,7 +67,7 @@
 #' }
 #' 
 #'@export
-parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL, 
+parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL, extra.packages = NULL,
                      n.imp.core = NULL, cl.type = "PSOCK", ...){ 
   # check form of data and m
   data <- check.dataform(data)
@@ -120,6 +120,10 @@ parlmice <- function(data, m = 5, seed = NA, cluster.seed = NA, n.core = NULL,
   parallel::clusterExport(cl, 
                           varlist = "do.call")
   parallel::clusterEvalQ(cl, library(mice))
+  if (!is.null(extra.packages)) {
+    for (p in extra.packages)
+      eval(parse(text = paste0("parallel::clusterEvalQ(cl, library(",p,"))")))
+  }
   if (!is.na(cluster.seed)) {
     parallel::clusterSetRNGStream(cl, cluster.seed)
   }
