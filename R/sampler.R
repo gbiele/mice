@@ -76,7 +76,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
                              calltype = calltype, 
                              user = user, ...)
               imp[[j]][, i] = tmp
-              attr(imp[[j]],"model.parameters") = attr(tmp,"model.parameters")
+              attr(imp[[j]],"spolr.fit") = attr(tmp,"spolr.fit")
               data[(!r[, j]) & where[, j], j] <- 
                 imp[[j]][(!r[, j])[where[, j]], i]
               
@@ -223,6 +223,10 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type), user, list(...))
   tmp = do.call(f, args = args)
   imputes[cc] <- tmp
-  attr(imputes,"model.parameters") = attr(tmp,"model.parameters")
+  attr(imputes,"spolr.fit") = list(formula = tmp$formula,
+                                             scale.X = tmp$scale.X,
+                                             X.means = tmp$X.means,
+                                             X.sds = tmp$X.sds,
+                                             sd_prior_b = tmp$sd_prior_b)
   imputes
 }
