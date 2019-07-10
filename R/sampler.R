@@ -223,10 +223,6 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type), user, list(...))
   tmp = do.call(f, args = args)
   imputes[cc] <- tmp
-  attr(imputes,"spolr.fit") = list(formula = tmp$formula,
-                                             scale.X = tmp$scale.X,
-                                             X.means = tmp$X.means,
-                                             X.sds = tmp$X.sds,
-                                             sd_prior_b = tmp$sd_prior_b)
+  attr(imputes,"spolr.fit") = attr(tmp,"spolr.fit")
   imputes
 }
