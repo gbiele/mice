@@ -220,6 +220,8 @@ sampler.univ <- function(data, r, where, type, formula, method, yname, k,
   imputes[!cc] <- NA
   
   args <- c(list(y = y, ry = ry, x = x, wy = wy, type = type), user, list(...))
-  imputes[cc] <- do.call(f, args = args)
+  tmp = do.call(f, args = args)
+  imputes[cc] <- tmp
+  attr(imputes,"model.parameters") = attr(tmp,"model.parameters")
   imputes
 }
