@@ -68,14 +68,15 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
           # (repeated) univariate imputation - type method
           if (univ) {
             for (j in b) {
-              imp[[j]][, i] <- 
+              tmp <- 
                 sampler.univ(data = data, r = r, where = where, 
                              type = type, formula = ff, 
                              method = theMethod, 
                              yname = j, k = k, 
                              calltype = calltype, 
                              user = user, ...)
-              
+              imp[[j]][, i] = tmp
+              attr(imp[[j]],"model.parameters") = attr(tmp,"model.parameters")
               data[(!r[, j]) & where[, j], j] <- 
                 imp[[j]][(!r[, j])[where[, j]], i]
               
