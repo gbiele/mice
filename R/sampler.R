@@ -76,7 +76,7 @@ sampler <- function(data, m, where, imp, blocks, method, visitSequence,
                              calltype = calltype, 
                              user = user, ...)
               imp[[j]][, i] = tmp
-              attr(imp[[j]],"spolr.fit") = attr(tmp,"spolr.fit")
+              attr(imp[[j]][, i],"spolr.fit") = attr(tmp,"spolr.fit")
               data[(!r[, j]) & where[, j], j] <- 
                 imp[[j]][(!r[, j])[where[, j]], i]
               
